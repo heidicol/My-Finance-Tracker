@@ -1233,7 +1233,7 @@
   // Register service worker for offline support
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
+      navigator.serviceWorker.register('/My-Finance-Tracker/sw.js')
         .then(() => console.log('My Finance: service worker registered'))
         .catch(err => console.log('SW registration failed:', err));
     });

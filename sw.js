@@ -1,13 +1,17 @@
-const CACHE_NAME = 'my-finance-v1';
+const CACHE_NAME = 'my-finance-v2';
 const ASSETS = [
-  '/my-finance/my-finance.html',
-  '/my-finance/manifest.json',
+  '/My-Finance-Tracker/my-finance.html',
+  '/My-Finance-Tracker/manifest.json',
+  '/My-Finance-Tracker/icon-192.png',
+  '/My-Finance-Tracker/icon-512.png',
   'https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then(cache => {
+      return Promise.allSettled(ASSETS.map(url => cache.add(url)));
+    })
   );
   self.skipWaiting();
 });
@@ -25,7 +29,7 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(cached => {
       return cached || fetch(event.request).catch(() =>
-        caches.match('/my-finance/my-finance.html')
+        caches.match('/My-Finance-Tracker/my-finance.html')
       );
     })
   );

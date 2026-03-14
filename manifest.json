@@ -2,8 +2,8 @@
   "name": "My Finance",
   "short_name": "My Finance",
   "description": "Track your income, expenses and savings — for the whole family.",
-  "start_url": "/my-finance/my-finance.html",
-  "scope": "/my-finance/",
+  "start_url": "/My-Finance-Tracker/my-finance.html",
+  "scope": "/My-Finance-Tracker/",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui", "browser"],
   "orientation": "portrait-primary",
@@ -43,7 +43,7 @@
       "name": "Add Expense",
       "short_name": "Add",
       "description": "Jump straight to adding an expense",
-      "url": "/my-finance/my-finance.html#add",
+      "url": "/My-Finance-Tracker/my-finance.html#add",
       "icons": [
         {
           "src": "icon-192.png",
