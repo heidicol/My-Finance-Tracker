@@ -679,7 +679,7 @@
   document.getElementById('monthly-chart-title').textContent = CUR_YEAR + ' — Monthly Overview';
   document.getElementById('pie-title').textContent = MONTHS[CUR_MONTH] + ' — Spending vs Income';
 
-  let expenses = JSON.parse(localStorage.getItem('expenses') || '[]');
+  let expenses = loadExpenses();
   let budget = parseFloat(localStorage.getItem('budget') || '0');
   let incomeMonthly = parseFloat(localStorage.getItem('income-monthly') || '0');
 
@@ -746,7 +746,26 @@
     document.getElementById('income-badge').textContent = fmt(totalMonthlyIncome()) + ' / mo';
   }
 
-  function save() { localStorage.setItem('expenses', JSON.stringify(expenses)); }
+  function save() {
+    const data = JSON.stringify(expenses);
+    localStorage.setItem('expenses', data);
+    // Backup copy in case localStorage is cleared
+    try { sessionStorage.setItem('expenses-backup', data); } catch(e) {}
+  }
+
+  function loadExpenses() {
+    try {
+      const main = localStorage.getItem('expenses');
+      if (main && main !== '[]') return JSON.parse(main);
+      // Try backup if main is empty
+      const backup = sessionStorage.getItem('expenses-backup');
+      if (backup && backup !== '[]') {
+        localStorage.setItem('expenses', backup); // restore
+        return JSON.parse(backup);
+      }
+    } catch(e) {}
+    return [];
+  }
 
   function saveIncome() {
     incomeMonthly = parseFloat(document.getElementById('income-monthly').value) || 0;
